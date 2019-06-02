@@ -1,31 +1,45 @@
 # Site settings
-title: 无聊的小阳阳的个人博客
-description: >
-  小阳阳写东西的地方
-author: 无聊的小阳阳
-email: gyat@foxmail.com
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://guoyang1996.github.io" # the base hostname & protocol for your site
-#twitter_username: YourTwitter
-github_username:  guoyang1996
+title_left    : "Think"
+title_right   : "space" # default: ""
+description   : "Minimalist Jekyll theme for technical writing blog."
+keywords      : "Jekyll, theme, free, download, SEO, blog, web, minimalist, thinkspace"
+url           : https://heiswayi.github.io/thinkspace # site url
+baseurl       : "" # apply repo name like "/myproject" if used under gh-pages branch, else (under master branch) just leave empty/blank
+cover         : "" # image uri like logo/cover image for site seo
 
-disqus_shortname: 无聊的小阳阳
+google_analytics  : UA-XXXXX-XX
+twitter_username  : ""
+comments_enabled  : false # if enabled (set to true), please provide your disqus_username
+disqus_shortname  : ""
+postshare_enabled : false
 
 # Build settings
-include: [_pages]
-markdown: kramdown
-permalink: /:year/:month/:title
+permalink   : /:year/:title/
+markdown    : kramdown
+highlighter : rouge
+
+source      : ./
+destination : ./_site
+
+# Sass configuration
 sass:
-    style: compressed
+  sass_dir  : assets/scss
+  style     : compressed # expanded
 
-gems:
-  - jemoji
+# Author settings
+author:
+  name     : "John Doe"
+
+plugins:
   - jekyll-sitemap
-# - amp-jekyll # Acceletrated Mobile Pages
+  - bourbon
+  - jekyll-paginate
 
-# AMP Settings
-# ampdir: amp/
-# enable_amp: true
+# navbar pages
+navbar:
+  - slug : about
+    title: About
+  - slug : blog
+    title: Blog
 
-# Google Analytics
-# google_analytics: UA-XXXXXXXX-X
+exclude: ["gulp", "node_modules", "bower", "bower_components", "config.rb", "src", "Gemfile", "Gemfile.lock", ".rvmrc", ".rbenv-version", "package.json", "gulpfile.js", "README.md", "Rakefile", "changelog.md", "script", "vendor"]
