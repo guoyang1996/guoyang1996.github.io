@@ -1,15 +1,15 @@
 # Site settings
-title: Your site
+title: 无聊的小阳阳的个人博客
 description: >
-    Your description
-author: Your name
-email: your@e.mail
+  小阳阳写东西的地方
+author: 无聊的小阳阳
+email: gyat@foxmail.com
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://yourname.github.io" # the base hostname & protocol for your site
-twitter_username: YourTwitter
-github_username:  YourGitHub
+url: "https://guoyang1996.github.io" # the base hostname & protocol for your site
+#twitter_username: YourTwitter
+github_username:  guoyang1996
 
-disqus_shortname: YourDisqusShortname
+disqus_shortname: 无聊的小阳阳
 
 # Build settings
 include: [_pages]
