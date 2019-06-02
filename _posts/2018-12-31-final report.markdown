@@ -1,6 +1,6 @@
 ---
 layout:  post
-title:  年终总结
+title:  2018年终总结
 date:  2018-12-31 14:20:00
 header-img:  pigpeiqi.jpg
 tags: [年终总结,学习生活]
