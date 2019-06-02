@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>VerdictDB Universalizing Approximate Query Processing - 无聊的小阳阳的个人博客</title>
+    <meta name="description" content="摘要">
+
+    <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin-ext,vietnamese"rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="canonical" href="http://localhost:4000/2018/09/VerdictDB-Universalizing-Approximate-Query-Processing">
+    <link rel="alternate" type="application/rss+xml" title="无聊的小阳阳的个人博客" href="http://localhost:4000/feed.xml">
+    
+
+    
+
+</head>
+
+    <body>
+        <main class="u-container">
+        <div class="c-page">
+		<article class="c-article">
+   	 	<header class="c-page__header">
+        <h1>小阳阳写东西的地方
+</h1>
+	
+    <p>
+        <a href="/">&lt;&ndash;&ndash; Back</a>
+    </p>
+	
+</header>
+
+    	<div class="c-article__main">
+        <article class="c-article">
+    <header class="c-article__header">
+        <h1 class="c-article__title">VerdictDB Universalizing Approximate Query Processing</h1>
+        <p class="c-article__time"><time datetime="2018-09-02T18:32:20+08:00" itemprop="datePublished">Sep 2, 2018</time></p>
+    </header>
+    <div class="c-article__main">
+        <h2 id="摘要">摘要</h2>
+
+<ul>
+  <li>近似查询处理学术研究很充裕，工业实践比较少</li>
+  <li>来自各数据库内部的阻力—-不想改代码！</li>
+  <li>近似查询的使用将迫使用户抛弃现使用的数据库—-不现实！</li>
+  <li>因此作者提出一种通用的解决方案—一个数据库无关近似查询处理引擎。</li>
+</ul>
+
+<h2 id="verdict基本方法">VERDICT基本方法</h2>
+
+<ul>
+  <li>使AQP居于驱动层，不改变原有数据库</li>
+  <li>引进中间件，重写用户请求，用户请求以关系型数据库语义像数据库发送并获得其近似结果</li>
+  <li>整个近似查询处理过程被编译成SQL形式，包括取样、近似处理以及错误估计</li>
+</ul>
+
+<h2 id="challenges">Challenges</h2>
+
+<ul>
+  <li>统计正确性—其他通过外键约束、修改join算法来实现，对于中间件来说，这些方法将不再适用</li>
+  <li>中间件效率—中间件不能承担大量计算，因为其没有查询优化以及分布式资源</li>
+  <li>服务器效率—错误估计须被表达成SQL查询，这将及其昂贵并且与近似查询的初中初衷相违背</li>
+</ul>
+
+<h2 id="设计标准">设计标准</h2>
+
+<ul>
+  <li>提供普适性—能支持大部分的分析型需求</li>
+  <li>提供统计正确性—在不须访问数据库内部的前提之下，无偏近似和粗偶估计</li>
+  <li>保证效率—需要比一般的查询处理快得多</li>
+</ul>
+
+<h2 id="我们的方法">我们的方法</h2>
+
+<ul>
+  <li>通过使用subsampling的理论规避了bootstrap的计算成本</li>
+  <li>提出一种有效计算的选择，称之为变分二次抽样</li>
+  <li>只依赖SQL表述来达到分层抽样的目的</li>
+</ul>
+
+<h2 id="系统架构">系统架构</h2>
+
+<p><img src="/assets/postsimg/verdict-1.png" alt="效果图" /></p>
+
+<h2 id="verdictdb内部结构">VERDICTDB内部结构</h2>
+
+<p><img src="/assets/postsimg/verdict-2.png" alt="效果图" /></p>
+
+<h2 id="样本准备和查询处理">样本准备和查询处理</h2>
+
+<p><img src="/assets/postsimg/verdict-3.png" alt="效果图" /></p>
+
+<h2 id="取样方法">取样方法</h2>
+
+<ul>
+  <li>均匀取样—每个样本都能以相同的概率被抽取到</li>
+  <li>哈希取样（universe取样）—不放回取样，从n个里面取m个</li>
+  <li>分层抽样</li>
+  <li>不规则取样—以上哪种都不是的取样</li>
+</ul>
+
+<p>接下来是文章的一大重点—变分二次取样
+很多公式，我也看得不是很懂，回头再慢慢深入看吧，先补补概率论知识先</p>
+
+<h2 id="总结">总结</h2>
+
+<p>干货满满的一篇文章。把如何搭建一个近似查询处理系统的过程描写的非常的详细。从顶层的接口设计，到最底层的SQL编写，都写的非常认真。由浅入深，理论研究也非常的靠谱。
+值得一读再读的论文！</p>
+
+		
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//无聊的小阳阳.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+    </div>
+    <footer class="c-article__footer">
+        <p>
+        
+            <span class="c-tag">论文阅读</span>
+        
+            <span class="c-tag">读书笔记</span>
+        
+        </p>
+    </footer>
+</article>
+
+		
+			
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//无聊的小阳阳.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+		
+    	</div>
+    	<footer class="c-page__footer">
+	</hr>
+	<p>
+		
+		<script type='text/javascript'>
+			fortune = new Array(9);
+			fortune[0] = '最是人间留不住，朱颜辞镜花辞树.';
+			fortune[1] = '众里寻他千百度，蓦然回首，那人却在灯火阑珊处';
+			fortune[2] = '可怜无定河边骨，犹是春闺梦里人';
+			fortune[3] = '似此星辰非昨夜，为谁风露立中宵';
+			fortune[4] = '醉后不知天在水，满船清梦压星河';
+			fortune[5] = '+1s +1s +1s +1s +1s +1s +1s +1s';
+			fortune[6] = '沾衣欲湿杏花雨，吹面不寒杨柳风';
+			fortune[7] = '你也配姓肖？你怎麼會姓肖！——你哪里配姓肖！';
+			fortune[8] = '你才是法師！你全家都是法師！';
+			index = Math.floor(Math.random() * fortune.length);
+			document.write(fortune[index]);
+		</script>
+		<noscript>天道酬勤，功不唐捐</noscript>
+	
+
+	</p>
+	
+	</hr></br>
+	
+	<p>&copy; 无聊的小阳阳 2019 | Powered by Jekyll | Using theme:Biu </p>
+	
+	</br>
+	
+	<p>Follow me on: <a href="https://github.com/guoyang1996">Github</a><span class="u-separate"></span> Subscribe: <a href="/feed.xml">RSS</a></p>
+</footer>
+
+</article>
+
+        </main>
+    </body>
+</html>

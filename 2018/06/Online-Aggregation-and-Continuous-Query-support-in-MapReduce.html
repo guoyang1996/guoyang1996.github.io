@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Online Aggregation and Continuous Query support in MapReduce - 无聊的小阳阳的个人博客</title>
+    <meta name="description" content="一些问题  Online Aggregation 是什么？">
+
+    <link href="//fonts.googleapis.com/css?family=Inconsolata:400,700&amp;subset=latin-ext,vietnamese"rel="stylesheet">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="canonical" href="http://localhost:4000/2018/06/Online-Aggregation-and-Continuous-Query-support-in-MapReduce">
+    <link rel="alternate" type="application/rss+xml" title="无聊的小阳阳的个人博客" href="http://localhost:4000/feed.xml">
+    
+
+    
+
+</head>
+
+    <body>
+        <main class="u-container">
+        <div class="c-page">
+		<article class="c-article">
+   	 	<header class="c-page__header">
+        <h1>小阳阳写东西的地方
+</h1>
+	
+    <p>
+        <a href="/">&lt;&ndash;&ndash; Back</a>
+    </p>
+	
+</header>
+
+    	<div class="c-article__main">
+        <article class="c-article">
+    <header class="c-article__header">
+        <h1 class="c-article__title">Online Aggregation and Continuous Query support in MapReduce</h1>
+        <p class="c-article__time"><time datetime="2018-06-30T18:32:20+08:00" itemprop="datePublished">Jun 30, 2018</time></p>
+    </header>
+    <div class="c-article__main">
+        <h3 id="一些问题">一些问题</h3>
+<ol>
+  <li>Online Aggregation 是什么？</li>
+</ol>
+
+<p>在线聚合是一种用于改进处理昂贵分析查询的数据库系统的交互行为的技术。几乎所有数据库操作都以批处理模式执行，即用户发出查询并等待数据库处理完整个查询。相反，使用在线聚合，用户在查询发布后立即以在线方式获取聚合查询的估计值。例如，如果最终答案为1000，则在k秒后，用户以95％的概率以[990，1020]的置信区间形式获得估计值。随着系统获得越来越多的样本，这种信心不断缩小。
+在线聚合由Hellerstein，Haas和Wang [1]于1997年提出，用于在单个表上进行群组聚合查询。后来，作者展示了如何以在线方式评估联接。[2] 2007年，杰梅因等人。设计并实现了一个名为Database-Online（或DBO）的原型数据库系统，该系统通过在线计算多个表的分组聚合查询，更重要的是以可扩展的方式。[3]所有用于在线聚合的方法都使用随机抽样，由于更新奖励理论的检验悖论，这在分布式环境中是不平凡的。 2011年，Pansare等人。提出了一个贝叶斯模型来处理检查悖论，并实现了类似MapReduce的环境的在线聚合[4]。</p>
+
+<ol>
+  <li>
+    <p>Continuous Query 指什么？</p>
+  </li>
+  <li>MapReduce 是什么？
+MapReduce详解</li>
+  <li>大数据中的流水线（pipeline）指的是什么？和我们理解的是一个吗？</li>
+  <li>fault tolerance指什么？容错率吗？</li>
+  <li>Map task 、Reduce task?</li>
+  <li>Hadoop。</li>
+</ol>
+
+<h2 id="一个支持在线聚合和连续查询的mapreduce框架">一个支持在线聚合和连续查询的MapReduce框架</h2>
+
+<p>MapReduce  使开发者以数据为中心，关注数据集的转换，屏蔽了分布式系统的一些细节（分布执行，网络通信，协作，故障恢复）</p>
+
+<p>作者设计了一个修改过的MapReduce框架，使得数据可以在operators间流水线操作。而传统的MapReduce框架，为了简化故障恢复的设计，每个MapReduce和job的输出是写入磁盘的。</p>
+
+<h3 id="流水线pipelinemapreduce有如下优点">流水线（pipeline）MapReduce有如下优点</h3>
+<ol>
+  <li>扩展了MapReduce在批处理间的编程模型</li>
+  <li>减少完成时间</li>
+  <li>提高系统对于批处理作业的利用率
+在线聚合：可以让用户得到较早的返回值，即边计算边返回。
+连续查询：事件监测和流处理</li>
+</ol>
+
+<p>作者搭建了一个称谓HOP的新的MapReduce框架，HOP保留了Hadoop的故障恢复特性，也能够执行用户自定义的原生MapReduce程序。</p>
+
+<p>MapReduce：一般用于面向批处理的大型计算问题，首先考虑的是作业的完成时间。Google的MapReduce框架和开源的Hadoop系统都保留了这个主要功能，他们的批处理实现策略是：每个Map和Reduce的输出在被下一阶段消费或者输出前都被持久化在磁盘上。</p>
+
+<p>批量持久化使得故障恢复非常的优雅简洁。我们知道故障恢复在大型分布式系统中非常的重要，因为节点哟很大概率出现挂机或故障。</p>
+
+<h3 id="hop-流水线版本的hadoop">HOP 流水线版本的Hadoop</h3>
+<ol>
+  <li>下游的数据流可以在生产者完成操作前消费数据</li>
+  <li>通过流水线可以实现在线聚合</li>
+  <li>支持连续查询</li>
+</ol>
+
+<h3 id="流水线机制中存在的challenge">流水线机制中存在的challenge</h3>
+<ol>
+  <li>简单的故障恢复机制。Google基于立即持久化数据实现了。我们可以让流水线机制与立即持久化相结合，通过允许生产者向消费者运送数据与持久化操作并行执行。</li>
+  <li>流水线机制中暗含的频繁通信。这与面向批量操作的“combiners”不同：在通信前执行压缩操作和提前聚合</li>
+  <li>时间同步机制</li>
+</ol>
+
+<h3 id="hadoop框架">Hadoop框架</h3>
+<ol>
+  <li>Hadoop MapReduce</li>
+  <li>HDFS（Hadoop Distributed File System）</li>
+</ol>
+
+<h3 id="hadoop-mapreduce">Hadoop MapReduce</h3>
+<ol>
+  <li>The Master（The JobTracker）接收作业，分发任务</li>
+  <li>workers（TaskTracker） 处理分发来的任务</li>
+</ol>
+
+<h2 id="流水线型mapreduce">流水线型MapReduce</h2>
+
+<h3 id="单个作业间的流水线机制">单个作业间的流水线机制</h3>
+
+<p>传统 ： Map-&gt;disk-&gt;Reduce
+修改后的：Map-&gt;Reduce</p>
+
+<p>挑战：
+	a. 确定粒度（流水线push）。一个简单做法是生成一条record传一条record。通过预处理的聚合来减少网络拥堵。
+	b. 排序问题。本来在阻塞型中，在map里面排好。流水线不能这样，解决办法：缓冲，使到达一个阈值，然后进行排序</p>
+
+<p>流量控制机制：map生成一个新的分片时，先查询TaskTracker未发送分片的数量，如果这个值超过了一个指定的阈值（比如假设为2），那么mapper将会缓存多个分片，一旦查询到未发送分片的数量低于这个阈值是，将会把这些分片组合、排序好到一个文件中，然后发送。</p>
+
+<p>combiner流量控制机制：每当调用combiner时，记录下map task输入数据和输出数据的比例，如果combiner能够减小数据量，那么map task 将积累更多的分片。</p>
+
+<p>作业间的流水线机制
+	 支持查询结果的提前返回</p>
+
+<p>故障恢复
+	Map task failure：先合并，不组合，直到确认提交再组合
+	Reduce task failure：在作业完成前，map的输出会同时写入磁盘，以便故障恢复</p>
+
+		
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//无聊的小阳阳.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+    </div>
+    <footer class="c-article__footer">
+        <p>
+        
+            <span class="c-tag">论文阅读</span>
+        
+            <span class="c-tag">读书笔记</span>
+        
+        </p>
+    </footer>
+</article>
+
+		
+			
+<div id="disqus_thread"></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = '//无聊的小阳阳.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+		
+    	</div>
+    	<footer class="c-page__footer">
+	</hr>
+	<p>
+		
+		<script type='text/javascript'>
+			fortune = new Array(9);
+			fortune[0] = '最是人间留不住，朱颜辞镜花辞树.';
+			fortune[1] = '众里寻他千百度，蓦然回首，那人却在灯火阑珊处';
+			fortune[2] = '可怜无定河边骨，犹是春闺梦里人';
+			fortune[3] = '似此星辰非昨夜，为谁风露立中宵';
+			fortune[4] = '醉后不知天在水，满船清梦压星河';
+			fortune[5] = '+1s +1s +1s +1s +1s +1s +1s +1s';
+			fortune[6] = '沾衣欲湿杏花雨，吹面不寒杨柳风';
+			fortune[7] = '你也配姓肖？你怎麼會姓肖！——你哪里配姓肖！';
+			fortune[8] = '你才是法師！你全家都是法師！';
+			index = Math.floor(Math.random() * fortune.length);
+			document.write(fortune[index]);
+		</script>
+		<noscript>天道酬勤，功不唐捐</noscript>
+	
+
+	</p>
+	
+	</hr></br>
+	
+	<p>&copy; 无聊的小阳阳 2019 | Powered by Jekyll | Using theme:Biu </p>
+	
+	</br>
+	
+	<p>Follow me on: <a href="https://github.com/guoyang1996">Github</a><span class="u-separate"></span> Subscribe: <a href="/feed.xml">RSS</a></p>
+</footer>
+
+</article>
+
+        </main>
+    </body>
+</html>
