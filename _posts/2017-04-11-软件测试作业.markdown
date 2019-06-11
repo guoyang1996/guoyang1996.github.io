@@ -11,7 +11,7 @@ tags: [java, swing]
 软件测试与质量保证的作业。
 <br>
 
-![效果图](/assets/img/next-date.png)
+![效果图](../assets/img/next-date.png)
 
 程序入口：
 

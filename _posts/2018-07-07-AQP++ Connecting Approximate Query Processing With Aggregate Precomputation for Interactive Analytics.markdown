@@ -20,11 +20,11 @@ tags: [论文阅读,读书笔记]
 ### AQP++的中心思想是：
 用取样来估计与已经预计算的聚合结果之间的不同部分。
 比如我们想估计如下查询的结果：
-![效果图](/assets/postsimg/aqp-1.png)
+![效果图](../assets/postsimg/aqp-1.png)
 假设下面查询结果已经进行过计算了：
-![效果图](/assets/postsimg/aqp-2.png)
+![效果图](../assets/postsimg/aqp-2.png)
 为了估计q(D)，AQP++使用样本来估计去（D)与pre（D）之间不同的部分:
-![效果图](/assets/postsimg/aqp-3.png)
+![效果图](../assets/postsimg/aqp-3.png)
 然后将估计值与预计算的值相加，即可得到我们想要的查询结果q(D).
 
 ### AQP++具有普适性：
@@ -43,17 +43,17 @@ tags: [论文阅读,读书笔记]
 
 我们将使用一个简单额例子来阐述这两个challenge。
 假设用户想要查询：
-![效果图](/assets/postsimg/aqp-4.png)
+![效果图](../assets/postsimg/aqp-4.png)
 
 其中x，y=1,2,…,100.一个有效的AggPre方法是计算出一个prefix cube(前缀立方)。在这个例子中，一维的前缀立方包括100个格子：
-![效果图](/assets/postsimg/aqp-5.png)
+![效果图](../assets/postsimg/aqp-5.png)
 
 其中t=1,2,…,100.一旦前缀立方建立了，那么任何用户查询都将通过不超过两个格子来计算得到。由于有101*100/2=5050中用户查询，也就说100个格子能包含5050种查询的结果。
 
 让我们首先考虑aggregate-identification问题。假设说，由于空间限制，我们只能存10个格子。在中情景之下，数据立方就只能包含55种聚合的结果。给定一个查询，如：
-![效果图](/assets/postsimg/aqp-6.png)
+![效果图](../assets/postsimg/aqp-6.png)
 AQP++ 需要知道如下55个已处理的聚合中哪个用来估计用户的查询。
-![效果图](/assets/postsimg/aqp-7.png)
+![效果图](../assets/postsimg/aqp-7.png)
 由于查询结果的质量高度依赖于所选择的最近查询，这个决定必须做的很仔细。我们不可能遍历所有的已处理的聚合值。我们提出了一种非常有效的解决该问题的算法。核心思想是快速识别出长得最像的查询并一一检验是否为最合适的。我们证明了该算法的在特定约束下的优越性以及在通常配置下有较好的实验性能。
 
 接下来讨论aggregate-precomputation问题。
@@ -87,7 +87,7 @@ aggregate identification and aggregation precomputation.
 这一部分介绍问题建模，为了便于表达我们假设查询没有group by从句。Group by部分的扩展间附录c部分。
 
 ### 定义1 （查询模板）
-![效果图](/assets/postsimg/aqp-8.png)
+![效果图](../assets/postsimg/aqp-8.png)
 
 例如：[SUM(sale),age]     查询产品价格与顾客年龄之间的关系
 
@@ -96,25 +96,25 @@ aggregate identification and aggregation precomputation.
 在AggPre计算中，人们经常计算前缀立方（或其变体）来回答范围查询。
 
 ### 定义2（前缀立方）
-![效果图](/assets/postsimg/aqp-9.png)
+![效果图](../assets/postsimg/aqp-9.png)
 
 每一个回答被称为立方中的格子。关于P-Cube的一个非常好的性质是，任何一个范围查询Q，它的回答都能用不超过2d个小格子来计算。比如，一个一维查询，SUM（3:5）。该查询的结果可以通过两个小格子获取，比如，SUM（1:5）-SUM（1:2）。对于一个2D的查询，问题的结果能通过最多不超过四个格子得到。如下图所示：
-![效果图](/assets/postsimg/aqp-10.png)
+![效果图](../assets/postsimg/aqp-10.png)
 然而，计算整个P-Cube的代价一般比较昂贵，一共需要计算
-![效果图](/assets/postsimg/aqp-11.png)
+![效果图](../assets/postsimg/aqp-11.png)
 个小格子。因此我们计算一个区块前缀立方，只用包含一小部分格子。
 
 定义3（区块前缀立方）
-![效果图](/assets/postsimg/aqp-12.png)
+![效果图](../assets/postsimg/aqp-12.png)
 BP-Cube减少了需要预计算的的小格子数。比如考虑一个二维查询Q：[SUM（1），C1，C2]，其中dom(C1)={1,2,…,15},dom(C2)={1,2,…,8}.完整的P-Cube包含15*8=120个小格子， SUM( 1 : y1 , 1 : y2 ) for all y1 ∈ [1 , 15] and y2 ∈ [1 , 8]。 dom(C1 ) small = { 5 , 10 , 15 } and dom(C2 ) small = { 4 , 8 } .那么BP-Cube仅包含3*2=6个cell。
 
 ### Aggregate Identification
 接下来开始定义Aggregate Identification问题。令P表示一个BP-Cube，如：
-![效果图](/assets/postsimg/aqp-13.png)
+![效果图](../assets/postsimg/aqp-13.png)
 
 
 ，注意虽然只有P是已知的，由BP-Cube的性质，我们可以假设P+中的所有查询的结果都是已知的。
-![效果图](/assets/postsimg/aqp-14.png)
+![效果图](../assets/postsimg/aqp-14.png)
 
 如，令dom(C1 ) small = { 4 , 6 } ,P ={SUM( 1 : 4 ), SUM( 1 : 6 )} , 则 P+ = {SUM( 1 : 4 ), SUM( 1 : 6 ), SUM( 5 :6 ),ϕ} , 其中 SUM( 5 : 6 ) 可以由 SUM( 1 : 6 )−SUM( 1 : 4 )得到，ϕ是一个条件永远为假的空查询.
 
@@ -123,7 +123,7 @@ BP-Cube减少了需要预计算的的小格子数。比如考虑一个二维查�
 一旦一个BP-Cube P已知，由于P+中的任意一个值都可以选择用来估计用户查询，我们需要选择出具有最小的查询误差的那个查询。我们将对P的最小查询误差用error（q,P)=minpre∈p+error(q,pre)来表示。
 
 ### 问题1（Aggregate Identification）
-![效果图](/assets/postsimg/aqp-15.png)
+![效果图](../assets/postsimg/aqp-15.png)
 
 考虑一个一维的例子。给定一个用户查询q:SUM(2:5) 以及一个BP-Cube P = {SUM（1:4），SUM（1:6}，则有四个已知值在P+中，P+={SUM（1,4），SUM（1:6），SUM( 5 : 6 ),ϕ}。聚合识别问题的关键在于识别出这四个值中最好的用来估计q的答案的值。
 
@@ -135,7 +135,7 @@ BP-Cube减少了需要预计算的的小格子数。比如考虑一个二维查�
 error (Q, P) = max q∈Q error (q, P),表示对所有可能的用户查询中最大的查询误差。我们选取这个误差度量值的原因是因为它对于减少高度不准确的查询的误差更有效，而不是对已知的非常精确的查询结果的那些查询。当然，还有许多其他的方式来定义查询模板误差。在试验中，我们演示了我们的聚合预处理算法，该算法被用于最优化最大误差，该算法也能够有效的减少其他类型的误差，比如平均误差以及中间误差（average error and median error）。
 
 ### 问题2 聚合预计算（Aggregate Precomputation）
-![效果图](/assets/postsimg/aqp-16.png)
+![效果图](../assets/postsimg/aqp-16.png)
 考虑一个一维的例子。给定一个阈值k=2一个查询模板Q: [ SUM(A),C1],其中dom(C 1 ) = { 1 , 2 , · · · , 5 } ，聚合预计算问题在于决定最好的BP-Cube P= {SUM( 1 : t 1 ), SUM( 1 : t 2 )} ，其中t1和t2从dom（C1）中选择从而使得error（Q,P)最小。对于多维的情况，问题将会变得更加具有挑战性，，因为我们需要决定BP-Cube的最佳形状，比如2 × 3 还是 3 × 2.
 
 # 从AQP到AQP++
@@ -144,7 +144,7 @@ error (Q, P) = max q∈Q error (q, P),表示对所有可能的用户查询中最
 AQP的数学基础是取样和估计理论。
 
 结果估计
-![效果图](/assets/postsimg/aqp-17.png)
+![效果图](../assets/postsimg/aqp-17.png)
 
 f不能是最大值最小值
 典型的聚合函数包括 AVG, SUM, COUNT,and VAR。有些自定义的聚合函数也可以较好的支持。
@@ -153,7 +153,7 @@ f不能是最大值最小值
 在估计结果的同时，AQP经常返回一个置信区间来量化估计结果的不确定性。
 计算置信区间的两种方式：
 1. 分析型，基于中心极限定理.缺少一般性，每个查询有它自己的置信区间。（具体计算看论文）
-![效果图](/assets/postsimg/aqp-18.png)
+![效果图](../assets/postsimg/aqp-18.png)
 
 2. 计算一个经验性的置信区间。一般会在原来的样本之上获取一系列的二次样本，然后在二次采样上估计查询结果。获得的结果构成了一个分布，从这个分布中可以计算出置信区间。这是一个更加一般性的方法。计算成本高。
 
@@ -161,10 +161,10 @@ AQP++框架
 定制化的结合AQP与AggPre.
 
 AQP++如何估计结果
-![效果图](/assets/postsimg/aqp-19.png)
+![效果图](../assets/postsimg/aqp-19.png)
 先估计ˆ q(S) 再估计ˆ pre(S) ，最后相加。
-![效果图](/assets/postsimg/aqp-20.png)
-![效果图](/assets/postsimg/aqp-21.png)
+![效果图](../assets/postsimg/aqp-20.png)
+![效果图](../assets/postsimg/aqp-21.png)
 
 
 然后带入（4）得到结果
@@ -181,43 +181,43 @@ SELECT f(A) FROM D WHERE Condition ，那么AQP++也可以得到。
 
 
 AQP++如何计算置信区间
-![效果图](/assets/postsimg/aqp-22.png)
+![效果图](../assets/postsimg/aqp-22.png)
 经验型类似上面已经介绍的。不过求的是
-![效果图](/assets/postsimg/aqp-23.png)
+![效果图](../assets/postsimg/aqp-23.png)
 的分布。
 关于为什么效果更好，误差更小，置信区间更小
-![效果图](/assets/postsimg/aqp-24.png)
+![效果图](../assets/postsimg/aqp-24.png)
 
 # AGGREGATE IDENTIFICATION
 
 我们先给出对一个简化版问题的解法，然后扩展该加法使它更具有一般性。
 
 最优解决办法
-![效果图](/assets/postsimg/aqp-25.png)
+![效果图](../assets/postsimg/aqp-25.png)
 
 暴力破解法：遍历计算 ，成本高
 
 我们的算法，相关系数越高，越好.
 SUM( 4 : 10 ) .  SUM( 4 : 9 ) and SUM( 1 : 3 )
 前一个很相关，后一个明显无关。
-![效果图](/assets/postsimg/aqp-26.png)
+![效果图](../assets/postsimg/aqp-26.png)
 
-![效果图](/assets/postsimg/aqp-27.png)
+![效果图](../assets/postsimg/aqp-27.png)
 
 
 定理3
-![效果图](/assets/postsimg/aqp-28.png)
+![效果图](../assets/postsimg/aqp-28.png)
 
 Aggregate-Identification Approach
 
 定理3只在特定情况下成立。
 The key idea of our approach is to quickly identify a small number of candidate aggregate values from P + and then examine which one is the best among them.将候选集表示为p-.
 公式6展示了一维p-的计算方法。
-![效果图](/assets/postsimg/aqp-29.png)
-![效果图](/assets/postsimg/aqp-30.png)
+![效果图](../assets/postsimg/aqp-29.png)
+![效果图](../assets/postsimg/aqp-30.png)
 
 然后遍历P-
-![效果图](/assets/postsimg/aqp-31.png)
+![效果图](../assets/postsimg/aqp-31.png)
 
 # AGGREGATE PRECOMPUTATION
 
@@ -229,4 +229,4 @@ The key idea of our approach is to quickly identify a small number of candidate 
 等分划
 
 多维
-![效果图](/assets/postsimg/aqp-32.png)
+![效果图](../assets/postsimg/aqp-32.png)

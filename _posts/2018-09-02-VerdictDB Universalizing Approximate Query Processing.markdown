@@ -39,15 +39,15 @@ tags: [论文阅读,读书笔记]
 
 ## 系统架构
 
-![效果图](/assets/postsimg/verdict-1.png)
+![效果图](../assets/postsimg/verdict-1.png)
 
 ## VERDICTDB内部结构
 
-![效果图](/assets/postsimg/verdict-2.png)
+![效果图](../assets/postsimg/verdict-2.png)
 
 ## 样本准备和查询处理
 
-![效果图](/assets/postsimg/verdict-3.png)
+![效果图](../assets/postsimg/verdict-3.png)
 
 ## 取样方法
 
