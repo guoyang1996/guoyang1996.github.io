@@ -3,7 +3,7 @@ layout: post
 title: ConcurrentHashMap源码分析听课笔记
 date: 2019-06-10 18:10:00
 typora-root-url: ..
-typora-copy-images-to: ..\assets\testimg
+typora-copy-images-to: ..\assets\postsimg
 ---
 **hashMap的扩容：**通过构建一个新的Map然后把原来的元素插入到新Map中实现。
 
