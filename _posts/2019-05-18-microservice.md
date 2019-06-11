@@ -1,15 +1,15 @@
 ---
 layout:  post
-title:  《微服务设计读书笔记》
+title:  《微服务设计》读书笔记
 date:  2019-05-18 14:20:00
 tags: [操作系统]
 typora-root-url: .
-typora-copy-images-to: ..\assets\postsimg
+typora-copy-images-to: ..\assets\clipimg
 ---
 
 《微服务设计》by Sam Newman，崔力强，张骏译
 
-- # 前言
+# 前言
 
 什么是微服务？
 
@@ -53,7 +53,7 @@ typora-copy-images-to: ..\assets\postsimg
 面向服务的架构
 微服务架构可以认为是SOA的一种特定方法。
 
- # 第2章 演化式架构师
+# 第2章 演化式架构师
 
 如果一个服务决定通过HTTP暴露REST接口，另一个用的是protocol buffers，第三个用的是Java  RMI，那么作为一个服务的消费者就需要支持各种形式的交互，这对于消费者来说简直就是噩梦。这也就是为什么我强调我们应该“担心服务之间的交互，而不需要过于关注各个服务内部发生的事情”。
 
@@ -69,7 +69,7 @@ typora-copy-images-to: ..\assets\postsimg
 
  
 
- # 第4章 集成
+# 第4章 集成
 
  微服务之间通信的方式的选择： SOAP、XML_RPC、REST、Protocol Buffers
 
@@ -135,4 +135,4 @@ typora-copy-images-to: ..\assets\postsimg
 
 微服务的原则
 
-![围 绕 业 务  概 念 建 模  自 动 化  的 文 化  度 可 观 察  离 失 效  自 冶 的 小 服 务  立 部 署  隐 藏 内 部  实 现 细 壭  一 切 都 去  中 心 化 ](/../assets/postsimg/clip_image001.png)
+![围 绕 业 务  概 念 建 模  自 动 化  的 文 化  度 可 观 察  离 失 效  自 冶 的 小 服 务  立 部 署  隐 藏 内 部  实 现 细 壭  一 切 都 去  中 心 化 ](/../assets/clipimg/wei1.png)

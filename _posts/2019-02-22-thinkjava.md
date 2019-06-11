@@ -3,8 +3,8 @@ layout:  post
 title:  《java编程思想》读书笔记
 date:  2019-02-22 14:20:00
 tags: [java,读书笔记]
-typora-root-url: ..
-typora-copy-images-to: ..\assets\postsimg
+typora-root-url: .
+typora-copy-images-to: ..\assets\clipimg
 ---
 
 # 第13章 字符串 

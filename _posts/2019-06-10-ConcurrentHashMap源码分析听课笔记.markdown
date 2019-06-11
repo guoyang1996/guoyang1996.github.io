@@ -3,8 +3,8 @@ layout: post
 title: ConcurrentHashMap源码分析听课笔记
 date: 2019-06-10 18:10:00
 tags: [java,多线程,听课笔记]
-typora-root-url: 
-typora-copy-images-to: ..\assets\postsimg
+typora-root-url: .
+typora-copy-images-to: ..\assets\clipimg
 ---
 **hashMap的扩容：**通过构建一个新的Map然后把原来的元素插入到新Map中实现。
 
