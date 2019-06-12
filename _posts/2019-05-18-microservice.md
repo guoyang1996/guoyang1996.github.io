@@ -2,7 +2,7 @@
 layout:  post
 title:  《微服务设计》读书笔记
 date:  2019-05-18 14:20:00
-tags: [操作系统]
+tags: [读书笔记]
 typora-root-url: .
 typora-copy-images-to: ..\assets\clipimg
 ---

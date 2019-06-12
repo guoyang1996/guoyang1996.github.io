@@ -3,7 +3,7 @@ layout: post
 title: Continuous Sampling for Online Aggregation Over Multiple Queries
 date: 2018-07-17 13:32:20+0300
 header-img: mac.jpg
-tags: [论文阅读,读书笔记]
+tags: [论文阅读]
 ---
 
 # 摘要

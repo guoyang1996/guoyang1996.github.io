@@ -4,7 +4,7 @@ title: VerdictDB Universalizing Approximate Query Processing
 date: 2018-09-02 13:32:20+0300
 header-img: "img/post-bg-2015.jpg"
 catalog: true
-tags: [论文阅读,读书笔记]
+tags: [论文阅读]
 ---
 ## 摘要
 

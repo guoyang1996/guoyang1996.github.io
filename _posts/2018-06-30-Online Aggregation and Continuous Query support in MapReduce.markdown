@@ -3,7 +3,7 @@ layout: post
 title: Online Aggregation and Continuous Query support in MapReduce
 date: 2018-06-30 13:32:20+0300
 header-img: mac.jpg
-tags: [论文阅读,读书笔记]
+tags: [论文阅读]
 ---
 ### 一些问题
 1. Online Aggregation 是什么？

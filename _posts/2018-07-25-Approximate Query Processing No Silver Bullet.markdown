@@ -3,7 +3,7 @@ layout: post
 title: Approximate Query Processing No Silver Bullet
 date: 2018-07-25 13:32:20+0300
 header-img: mac.jpg
-tags: [论文阅读,读书笔记]
+tags: [论文阅读]
 ---
 
 

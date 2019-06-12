@@ -3,7 +3,7 @@ layout: post
 title: Megastore Providing Scalable, Highly Available Storage for Interactive Services
 date: 2018-08-10 13:32:20+0300
 header-img: mac.jpg
-tags: [论文阅读,读书笔记]
+tags: [论文阅读]
 ---
 
 # 摘要
