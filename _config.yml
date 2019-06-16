@@ -11,7 +11,7 @@ site-twitter: #if your site has a twitter account, enter it here
 # Author Settings
 author: 无聊的小阳阳 # add your name
 author-img: guoyang.jpg # add your photo
-about-author: 小菜鸟，学习中. 有问题或想和我讨论一些问题可以到github下面留言^_^# add description
+about-author: 小菜鸟，学习中. <br> 有问题或想和我讨论一些问题可以到github下面留言^_^ # add description
 social-twitter: # add your Twitter handle
 social-facebook: # add your Facebook handle
 social-github: guoyang1996 # add your Github handle
