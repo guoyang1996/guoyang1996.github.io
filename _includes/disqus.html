@@ -1,4 +1,4 @@
-<section class="comment-area">
+<!--<section class="comment-area">
   <div class="comment-wrapper">
     {% if site.discus-identifier %}
     <div id="disqus_thread" class="article-comments"></div>
@@ -13,4 +13,18 @@
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     {% endif %}
   </div>
-</section> <!-- End Comment Area -->
+</section>  End Comment Area -->
+<div id="gitmentContainer"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+    owner: 'guoyang1996',
+    repo: 'guoyang1996.github.io',
+    oauth: {
+        client_id: '79830d9a8fea7cc6b3d2',
+        client_secret: 'b855ad84a2128eb71d872e8c7c706b2eec85e884',
+    },
+});
+gitment.render('gitmentContainer');
+</script>
