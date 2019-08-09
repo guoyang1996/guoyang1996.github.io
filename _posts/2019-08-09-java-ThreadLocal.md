@@ -20,7 +20,7 @@ typora-copy-images-to: ..\assets\clipimg
 ```java
 public class Test {
     public static ThreadLocal<Integer> tl = new ThreadLocal<>();
-    public static List<Integer> list = new ArrayList<>();
+    public static CopyOnWriteArrayList<Integer> list = new CopyOnWriteArrayList<>();
     public static void main(String[] args) {
         Thread t1 = new MyThread(1);
         Thread t2 = new MyThread(2);
