@@ -29,8 +29,6 @@ typora-copy-images-to: ..\assets\clipimg
 1. 将数据保存到数据库，待系统空闲时再进行处理
 2. 将数据用日志进行记录，后由人工处理
 
-##  
-
 ## 不建议使用JDK提供的Executors线程池工具类
 
 JDK为我们提供了Executors线程池工具类，里面有默认的线程池创建策略，大概有以下几种：
